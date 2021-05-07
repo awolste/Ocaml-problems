@@ -1,0 +1,33 @@
+let rec f1 = function
+    ([], el) -> -10000
+    | (hd::tl, el) -> if el == hd then el else f1(tl, el);;
+
+
+let rec first_duplicate = function
+    ([]) -> -10000
+    | (hd::tl) -> if f1(tl, hd) != -10000 then hd else first_duplicate(tl);;
+
+
+
+let rec f2 = function
+    ([], el, prelist) -> if (List.mem (el) (prelist)) then -10000 else el 
+    | (postlist, el, prelist) -> if (List.mem (el) (postlist)) || (List.mem (el) (prelist)) then f2(List.tl postlist, List.hd postlist, el::prelist) else el;;
+
+
+let rec first_nonrepeating = function
+    ([]) -> -10000
+    | (hd::tl) -> f2(tl, hd, []);;
+
+
+
+let rec sumOfTwo = function
+    ([], _, _) -> false
+    | (list1, list2, sum) -> if (List.mem (sum - (List.hd list1)) (list2)) then true else sumOfTwo(List.tl list1, list2, sum);;
+
+
+
+let rec f3 = function
+    (og, num, list) -> if num < og -1 then f3(og, num+1, (og-num, num)::list) else (og-num, num)::list;;
+
+let rec cyk_sublists = function
+    (num) -> if num > 1 then f3(num, 1, []) else [];;
